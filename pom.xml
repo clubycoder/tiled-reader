@@ -1,0 +1,80 @@
+<project>
+  <modelVersion>4.0.0</modelVersion>
+
+  <groupId>luby.kids</groupId>
+  <artifactId>tiled-reader</artifactId>
+  <version>0.1.0</version>
+
+  <packaging>jar</packaging>
+
+  <properties>
+    <maven.compiler.source>1.8</maven.compiler.source>
+    <maven.compiler.target>1.8</maven.compiler.target>
+
+    <schema.source>https://raw.githubusercontent.com/bjorn/tiled/master/util/java/libtiled-java/src/main/resources/map.xsd</schema.source>
+    <schema.dir>${project.build.directory}/generated-sources/schema</schema.dir>
+    <schema.dest>${schema.dir}/map.xsd</schema.dest>
+    <schema.package>${project.groupId}.tiled</schema.package>
+
+    <junit.version>4.12</junit.version>
+  </properties>
+
+  <dependencies>
+    <!-- Testing -->
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <version>${junit.version}</version>
+      <scope>test</scope>
+    </dependency>
+  </dependencies>
+
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-antrun-plugin</artifactId>
+        <executions>
+          <execution>
+            <id>download-schema</id>
+            <phase>initialize</phase>
+            <goals>
+              <goal>run</goal>
+            </goals>
+            <configuration>
+              <tasks>
+                <mkdir dir="${schema.dir}" />
+                <get src="${schema.source}"
+                     dest="${schema.dest}"
+                     verbose="true"
+                     usetimestamp="true"
+                />
+              </tasks>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <groupId>org.jvnet.jaxb2.maven2</groupId>
+        <artifactId>maven-jaxb2-plugin</artifactId>
+        <version>0.14.0</version>
+        <configuration>
+          <schemaDirectory>${schema.dir}</schemaDirectory>
+          <schemaIncludes>
+            <include>*.xsd</include>
+          </schemaIncludes>
+          <extension>true</extension>
+          <generatePackage>${schema.package}</generatePackage>
+          <markGenerated>false</markGenerated>
+        </configuration>
+        <executions>
+          <execution>
+            <goals>
+              <goal>generate</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+    </plugins>
+  </build>
+</project>
