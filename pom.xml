@@ -89,4 +89,11 @@
       </plugin>
     </plugins>
   </build>
+
+  <distributionManagement>
+    <repository>
+      <id>clubycoder-bintray-kids-release</id>
+      <url>https://api.bintray.com/maven/clubycoder/kids/release/;publish=1</url>
+    </repository>
+  </distributionManagement>
 </project>
