@@ -90,6 +90,16 @@
     </plugins>
   </build>
 
+  <repositories>
+    <repository>
+      <snapshots>
+        <enabled>false</enabled>
+      </snapshots>
+      <id>bintray-clubycoder-kids</id>
+      <name>bintray-clubycoder-kids</name>
+      <url>https://dl.bintray.com/clubycoder/kids</url>
+    </repository>
+  </repositories>
   <distributionManagement>
     <repository>
       <id>clubycoder-bintray-kids-release</id>
